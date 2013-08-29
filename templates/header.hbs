@@ -4,6 +4,12 @@
             <div class="pull-right">
                 <button class="btn btn-default headerButton" data-toggle="modal" data-target="#newBucketModal">Create Bucket</button> <br />
                 <button class="btn btn-default headerButton">Create Key</button>
+
+                {{#unless controllers.user.isLoggedIn}}
+                    <button class="btn btn-default headerButton" id="signin" {{action doLogIn}}>Login</button>
+                {{else}}
+                    <button class="btn btn-default headerButton" id="signout">Logout</button>
+                {{/unless}}
             </div>
         </div>
     </div>
