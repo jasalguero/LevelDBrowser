@@ -2,7 +2,9 @@ var LDBB = Em.Application.create({})
 
 LDBB.Router.map(function() {
     this.resource("buckets", {path: "/"}, function() {
-        this.resource("bucket", {path: "/bucket/:bucket_id"}, function() {});
+        this.resource('bucket', {path: '/bucket/:bucket_id'}, function() {
+            this.route('key', {path: '/key/:key_id'});
+        });
     });
 });
 

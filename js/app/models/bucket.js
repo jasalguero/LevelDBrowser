@@ -1,32 +1,31 @@
-LDBB.Bucket = Em.Object.extend({
+LDBB.Bucket = LDBB.Model.extend({
+    keys: function() {
+        var keys = Ember.A();
+        var bucketid = this.get('id');
 
+        if (this.get('key_ids')) {
+            this.get('key_ids').forEach(function(keyid) {
+                console.log('bucketid: ' + bucketid + " keyid: " + keyid);
+                keys.pushObject(LDBB.Key.find(bucketid, keyid));
+            });
+        }
+
+        return keys;
+    }.property('key_ids.length')
 });
 
 LDBB.Bucket.reopenClass({
-    collection: Em.A(),
-
-    find: function(id){
-        var foundItem = this.getObjectById(id);
-
-        return foundItem;
+    find: function(id) {
+        console.log(id);
+        return LDBB.Model.find('/json/buckets', id, LDBB.Bucket, 'bucket');
     },
 
-    findAll: function(){
-        var collection = Em.get(LDBB.Bucket, 'collection');
-        collection.pushObject(LDBB.Bucket.create({"id": "One", "key_ids": ["Key One", "Key Two"]}));
-        collection.pushObject(LDBB.Bucket.create({"id": "Two", "key_ids": ["Key Three", "Key Four"]}));
-        return Em.get(LDBB.Bucket, 'collection');
+    findAll: function() {
+        return LDBB.Model.findAll('/json/buckets', LDBB.Bucket, 'buckets');
     },
 
-    getObjectById: function(id){
-        var bucket = null
+    create: function(bucketName) {
+        return LDBB.Model.createRecord('/json/buckets', LDBB.Bucket, LDBB.Bucket.create({'id':bucketName}))
 
-        Em.get(LDBB.Bucket, 'collection').forEach(function(item){
-            if (item.get('id') === id){
-                bucket = item;
-            }
-        });
-
-        return bucket;
     }
 });

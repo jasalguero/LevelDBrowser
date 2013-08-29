@@ -20,11 +20,43 @@
     </script>
 
     <script type="text/x-handlebars" id="header">
-        <div id="header" class="navbar navbar-ffixed-top top-navbar">
+        <div id="header" class="navbar navbar-fixed-top top-navbar">
             <div class="pageContent">
-                <img src="/images/header_logo.png"/>
+                <img src="/images/header_logo.png">
+                <div class="pull-right">
+                    <button class="btn btn-default headerButton" data-toggle="modal" data-target="#newBucketModal">Create Bucket</button> <br />
+                    <button class="btn btn-default headerButton">Create Key</button>
+                </div>
             </div>
         </div>
+
+        {{render addBucket}}
+
+    </script>
+
+    <script type="text/x-handlebars" id="add_bucket">
+        <div class="modal fade" id="newBucketModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Create new Bucket</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form role="form">
+                            <div class="form-group">
+                                <label>New Bucket name:</label>
+                                {{input valueBinding="newBucketName" classNames="form-control"}}
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" {{action addBucket newBucketName}}>Save changes</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
     </script>
 
     <script type="text/x-handlebars" id="buckets">
@@ -32,14 +64,13 @@
             <h1>Buckets</h1>
 
             <div class="list-group">
-                {{#each controller.content}}
-                    {{#linkTo "bucket" this class="list-group-item"}}
-                    <div>{{id}}</div>
-                    {{/linkTo}}
+                {{#each controller}}
+                {{#linkTo "bucket" this class="list-group-item"}}
+                <div>{{id}}</div>
+                {{/linkTo}}
                 {{/each}}
             </div>
         </div>
-
         <div class="col-md-8">
             {{outlet}}
         </div>
@@ -50,24 +81,51 @@
             <div class="col-md-4">
                 <h1>{{id}}</h1>
                 <div class="list-group">
-                    {{#each key_ids}}
-                    <div class="list-group-item">{{this}}</div>
+                    {{#each key in keys}}
+                    {{#linkTo "bucket.key" key class="list-group-item"}}
+                    <div>{{key.keyName}}</div>
+                    {{/linkTo}}
                     {{/each}}
                 </div>
             </div>
-            <div class="col-md-8"></div>
+            <div class="col-md-8">
+                {{outlet}}
+            </div>
         </div>
+    </script>
+
+    <script type="text/x-handlebars" id="bucket/key">
+        <h1>{{keyName}}</h1>
+
+        {{#if isEditing}}
+        {{textarea valueBinding="value" classNames="editKeyArea"}}
+        <button class="btn btn-default" {{action doSave}}>Save</button>
+        {{else}}
+        <div class="panel panel-body">
+            {{value}}
+        </div>
+        <button class="btn btn-default" {{action doEdit}}>Edit</button>
+        {{/if}}
     </script>
 
 
     <script type="text/javascript" charset="utf-8" src="js/scripts/jquery-1.10.2.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/scripts/handlebars.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/scripts/ember-1.0.0-rc.7.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/scripts/bootstrap-modal.js"></script>
 
 
     <script type="text/javascript" charset="utf-8" src="js/app/app.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app/models/model.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/app/models/bucket.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app/models/key.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app/controllers/buckets_controller.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app/controllers/addBucket_controller.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app/controllers/key_controller.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/app/routes/bucket_route.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/app/routes/buckets_route.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/app/routes/key_route.js"></script>
+
+    <!--/json/buckets POST {"id": "test"} -->
 </body>
 </html>
