@@ -44,7 +44,7 @@ LDBB.Model.reopenClass({
             console.log(data);
             if (data[key]) {
                 $.each(data[key], function(i, row) {
-                    var item = model.getObjectById(row.id, type)
+                    var item = model.getObjectById(row.id, type);
                     if (!item) {
                         item = type.create({id: row.id});
                         collection.pushObject(item);
@@ -59,13 +59,13 @@ LDBB.Model.reopenClass({
     },
 
     getObjectById: function(id, type){
-        var bucket = null
+        var bucket = null;
 
         var collection = Em.get(type, 'collection');
 
         if (!collection) {
             collection = Em.A();
-            Em.set(type, 'collection')
+            Em.set(type, 'collection');
         }
 
         collection.forEach(function(item){

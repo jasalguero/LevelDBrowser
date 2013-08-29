@@ -1,0 +1,11 @@
+    <h1>{{keyName}}</h1>
+
+    {{#if isEditing}}
+        {{textarea valueBinding="value" classNames="editKeyArea"}}
+        <button class="btn btn-default" {{action doSave}}>Save</button>
+    {{else}}
+        <div class="panel panel-body">
+            {{value}}
+        </div>
+        <button class="btn btn-default" {{action doEdit}}>Edit</button>
+    {{/if}}

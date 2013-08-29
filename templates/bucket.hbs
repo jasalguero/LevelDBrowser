@@ -1,0 +1,15 @@
+    <div class="row">
+        <div class="col-md-4">
+            <h1>{{id}}</h1>
+            <div class="list-group">
+                {{#each key in keys}}
+                    {{#linkTo "bucket.key" key class="list-group-item"}}
+                        <div>{{key.keyName}}</div>
+                    {{/linkTo}}
+                {{/each}}
+            </div>
+        </div>
+        <div class="col-md-8">
+            {{outlet}}
+        </div>
+    </div>

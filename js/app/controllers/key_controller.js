@@ -7,8 +7,7 @@ LDBB.BucketKeyController = Ember.ObjectController.extend({
 
     doSave: function() {
         this.set('isEditing', false);
-        var model = this.get('content');
-        LDBB.Key.updateRecord(model);
+        this.get('store').commit();
     },
 
     modelObserver: function() {

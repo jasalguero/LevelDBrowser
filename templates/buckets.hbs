@@ -1,0 +1,14 @@
+    <div class="col-md-4">
+        <h1>Buckets</h1>
+
+        <div class="list-group">
+            {{#each controller}}
+                {{#linkTo "bucket" this class="list-group-item"}}
+                    <div>{{id}}</div>
+                {{/linkTo}}
+            {{/each}}
+        </div>
+    </div>
+    <div class="col-md-8">
+        {{outlet}}
+    </div>

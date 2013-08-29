@@ -1,5 +1,5 @@
 LDBB.BucketsRoute = Em.Route.extend({
     model: function(){
-        return LDBB.Bucket.findAll();
+        return LDBB.Bucket.find();
     }
 });

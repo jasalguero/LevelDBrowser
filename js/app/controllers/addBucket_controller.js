@@ -5,4 +5,4 @@ LDBB.AddBucketController = Em.ObjectController.extend({
         console.log(this.get('newBucketName'));
 
     }
-})
+});

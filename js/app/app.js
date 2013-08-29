@@ -1,4 +1,12 @@
-var LDBB = Em.Application.create({})
+var LDBB = Em.Application.create({});
+
+LDBB.Adapter = DS.RESTAdapter.extend({
+    namespace: 'json'
+});
+
+LDBB.Store = DS.Store.extend({
+    adapter: 'LDBB.Adapter'
+});
 
 LDBB.Router.map(function() {
     this.resource("buckets", {path: "/"}, function() {
